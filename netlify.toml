@@ -12,3 +12,17 @@
   for = "/manifest.webmanifest"
   [headers.values]
     Content-Type = "application/manifest+json"
+
+# Rutas sin # (p. ej. /admin, /cotizar) → la app las resuelve
+[[redirects]]
+  from = "/admin"
+  to = "/#/admin"
+  status = 302
+[[redirects]]
+  from = "/admin/*"
+  to = "/#/admin/:splat"
+  status = 302
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
