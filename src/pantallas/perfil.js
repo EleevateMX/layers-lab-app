@@ -27,6 +27,7 @@ export async function render(app, { perfil }) {
       ${pushOn ? '' : '<button class="btn chico" id="push">Activar</button>'}
     </div>` : ''}
 
+    ${perfil.rol === 'admin' ? h`<a class="tarjeta azul fila" href="#/admin" style="text-decoration:none"><img src="/simbolo-crema.png" alt="" style="width:36px"><div style="flex:1"><b style="font-weight:600">Panel del taller</b><div style="font-size:12px;color:var(--teal)">Bandeja, cotizador y contenido de la app</div></div>${ICO.flecha}</a>` : ''}
     <form id="f" class="tarjeta col" style="gap:12px">
       <span class="eyebrow">Mis datos</span>
       <label class="campo">Nombre<input name="nombre" value="${esc(perfil.nombre)}" required></label>

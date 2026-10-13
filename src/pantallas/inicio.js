@@ -21,6 +21,7 @@ export async function render(app, { perfil }) {
       <a href="#/pedidos" class="redondo" style="background:#fff;border:1px solid var(--borde);position:relative" aria-label="Mensajes${pend ? `, ${pend} sin leer` : ''}">${ICO.chat}${pend ? `<span class="chip ambar" style="position:absolute;top:-4px;right:-4px;min-height:18px;padding:0 6px;font-size:11px">${pend}</span>` : ''}</a>
     </div>
 
+    ${perfil.rol === 'admin' ? h`<a href="#/admin/bandeja" class="tarjeta teal fila" style="text-decoration:none;color:var(--azul)"><b style="font-weight:600;flex:1">Panel del taller → bandeja de solicitudes</b>${ICO.flecha}</a>` : ''}
     ${ultimo ? h`<a href="#/chat/${ultimo.pedido_id}" class="tarjeta azul fila" style="text-decoration:none">
       <img src="/simbolo-crema.png" alt="" style="width:40px">
       <div style="flex:1;min-width:0"><b style="font-weight:600">Tienes un mensaje del taller</b><div style="font-size:13px;color:var(--teal);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(ultimo.tipo === 'oferta' ? 'Tu cotización está lista' : ultimo.texto || 'Te mandamos una imagen')}</div></div>${ICO.flecha}</a>` : ''}
