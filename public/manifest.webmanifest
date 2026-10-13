@@ -1,0 +1,24 @@
+{
+  "name": "Layers Lab",
+  "short_name": "Layers Lab",
+  "description": "Impresión 3D, maquetas y modelado 3D a tu medida en Mérida.",
+  "id": "/",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "es-MX",
+  "background_color": "#FDF8EC",
+  "theme_color": "#1C1F4A",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-1024.png", "sizes": "1024x1024", "type": "image/png" }
+  ],
+  "shortcuts": [
+    { "name": "Cotizar", "url": "/#/cotizar", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Mis pedidos", "url": "/#/pedidos", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Mensajes", "url": "/#/pedidos", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}
