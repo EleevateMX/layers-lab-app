@@ -24,8 +24,23 @@ const RUTAS = {
 const PUBLICAS = new Set(['registro', 'entrar', 'recuperar']);
 const LIBRES = new Set(['privacidad', 'cookies']); // se ven con o sin sesión
 
+// Al volver de Google/correo, Supabase trae ?code= o #access_token=: esperamos a que procese la sesión
+let listoAuth = null;
+function esperarAuth() {
+  if (listoAuth) return listoAuth;
+  const trae = /[?&]code=/.test(location.search) || /access_token=|error=/.test(location.hash);
+  listoAuth = trae
+    ? new Promise((res) => { const t = setTimeout(res, 6000); const { data } = sb.auth.onAuthStateChange((ev) => { if (ev === 'SIGNED_IN' || ev === 'INITIAL_SESSION') { clearTimeout(t); data.subscription.unsubscribe(); res(); } }); })
+    : sb.auth.getSession().then(() => {});
+  return listoAuth;
+}
+
 export async function render() {
   if (limpiar) { try { limpiar(); } catch {} limpiar = null; }
+  await esperarAuth();
+  // Si Google dejó tokens en el hash, quítalos para que no pisen la ruta
+  if (/access_token=|refresh_token=/.test(location.hash)) { history.replaceState(null, '', location.pathname + '#/completar'); }
+  if (/[?&]code=/.test(location.search)) { history.replaceState(null, '', location.pathname + (location.hash || '#/completar')); }
   const partes = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
   const ruta = partes[0] || '';
   const mod = RUTAS[ruta];
@@ -48,7 +63,10 @@ export async function render() {
 }
 
 window.addEventListener('hashchange', render);
+let ultimoEv = null;
 sb.auth.onAuthStateChange((ev) => {
+  if (ev === ultimoEv && ev !== 'SIGNED_OUT') return;
+  ultimoEv = ev;
   if (ev === 'SIGNED_OUT' || ev === 'SIGNED_IN' || ev === 'USER_UPDATED') { olvidarPerfil(); render(); }
 });
 

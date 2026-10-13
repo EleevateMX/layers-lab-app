@@ -5,7 +5,7 @@ const key = import.meta.env.VITE_SUPABASE_KEY;
 if (!url || !key) console.warn('Faltan VITE_SUPABASE_URL / VITE_SUPABASE_KEY en .env');
 
 export const sb = createClient(url, key, {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'pkce' },
 });
 
 export const SERVICIOS = {
